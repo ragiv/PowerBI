@@ -32,4 +32,39 @@ We can unchek it, but what is the advantage of having this option "Auto date/tim
 Roughly: Automatically creates hierarchies  
 </p>
 <b> Data Modeling best practices:<b/>
+      
+      
+Avoid Wide tables
+------------------
+	As data volumes grow performance can start to suffer due to longer scans/reads.
+	It misuses Memory, your model gets big and it uses more memory
+
+
+What if some one asks to introduce another table and i wanted to correalte values across those two table (with existig table)?
+
+Correlate one single wide table to another wide table (internetsales/resellerSales), as there is no relation it just does cartesion product so the report
+does not show properly.
+
+How can we solve this problem?
+We have to create relation between these two wide tables. If we see them we are comparing with 
+ProductKey
+-----------
+then try to create realtion, but it shows waring saying it is MANY-MANY relations (we shoudl totally avoid many-many relations), but any how 
+we can create relation, it creates bi-directional relation.
+
+but also i want to create relation with SalesterritorrKey
+--------------------
+This time it creates an inactive relations (with dotted lines where as the first was a line). how do you gonna handle that?
+Some another complexcity added to the model, DAX is gonna be complex and now your performace is surely affetected.
+
+first point is, try to avoid wide tables, for all the above reasons.
+
+Nex point is, you shoudl really focused narrow tables, these are called as STAR schema.
+
+Example:
+Will split into fact/dimension tables, Product_dim, f_internetsales, f_resellerSales. STAR Schema is optimized for reporting. With those three tables and having the relation (internetsales <- Product -> ResellerSales, both tables are having one-many relation with Prodcut_Dim). Now if we use this new model in our report then the visualization woudl be good i.e., meaningful.
+
+What happend if there is relation between two tables and trying to correlate them in a report? Why it does show wrong chart?
+Why we have to avoid Many-many relations?
+What is inactive relation? How it works? any advatages/disadvantages?      
 </p>
